@@ -4,7 +4,7 @@ A module containing an implementation of Pascal's Triangle function.
 '''
 
 
-def _combination(n, r):
+def combination(n, r):
     '''Compute the combination of two variables'''
     from functools import reduce
 
@@ -18,12 +18,15 @@ def _combination(n, r):
 
 
 def pascal_triangle(n):
-    '''Generates the pascal triangle for a power, excluding (z+y)^power'''
-    assert type(n) == int "n must be an integer!"
+    """
+    Generates the Pascal's Triangle for a given power n, excluding (z+y)^n.
+    """
+    assert type(n) == int
     if n <= 0:
         return []
 
-    return [[1]] + [
-        [_combination(z, y) for y in range(z+1)]
+    triangle = [[1]] + [
+        [combination(z, y) for y in range(z+1)]
         for z in range(1, n)
     ]
+    return triangle
