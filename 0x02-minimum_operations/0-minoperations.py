@@ -9,7 +9,7 @@ def minOperations(n):
     '''
     if n < 1:
         return 0
-    # use memoization to avoid recomputation    
+    # use memoization to avoid recomputatio
     memo = [0, 0] + [float('inf')] * (n - 1)
     for k in range(2, n + 1):
         for j in range(2, k + 1):
