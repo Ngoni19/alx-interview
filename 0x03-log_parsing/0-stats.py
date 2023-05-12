@@ -10,27 +10,28 @@ cnt = 0
 t_size = 0
 
 try:
-    for line_list in map(str.split, sys.stdin):
+    for line in sys.stdin:
+        line_list = line.split(" ")
         if len(line_list) > 4:
-            cd = line_list[-2]
+            code = line_list[-2]
             size = int(line_list[-1])
-            if cd in cache_scode:
-                cache_scode[cd] += 1
+            if code in cache_scode.keys():
+                cache_scode[code] += 1
             t_size += size
             cnt += 1
 
         if cnt == 10:
-            print(f'File size: {t_size}')
-            for key, value in sorted(cache_scode.items()):
-                if value != 0:
-                    print(f'{key}: {value}')
             cnt = 0
+            print('File size: {}'.format(t_size))
+            for k, value in sorted(cache_scode.items()):
+                if value != 0:
+                    print('{}: {}'.format(k, value))
 
 except Exception as err:
     pass
 
 finally:
-    print(f'File size: {t_size}')
-    for key, value in sorted(cache_scode.items()):
+    print('File size: {}'.format(t_size))
+    for k, value in sorted(cache_scode.items()):
         if value != 0:
-            print(f'{key}: {value}')
+            print('{}: {}'.format(k, value))
