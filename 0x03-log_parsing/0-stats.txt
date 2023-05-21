@@ -1,0 +1,37 @@
+#!/usr/bin/python3
+'''a script that reads stdin line by line and computes metrics'''
+import sys
+
+cache = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
+         '404': 0, '405': 0, '500': 0}
+total_size = 0
+counter = 0
+
+
+def print_stats():
+    '''Print stats whenever conditions are met'''
+    print(f'File size: {total_size}')
+    for item in cache.items():
+        if item[1] != 0:
+            print('{}: {}'.format(item[0], item[1]))
+
+
+if __name__ == '__main__':
+    try:
+        for line in sys.stdin:
+            contents = line.split()
+            if len(contents) > 4:
+                file_size = contents[-1]
+                status_code = contents[-2]
+                if status_code in cache:
+                    cache[status_code] += 1
+                total_size += int(file_size)
+                counter += 1
+
+            if counter == 10:
+                print_stats()
+                counter = 0
+    except KeyboardInterrupt:
+        pass
+    finally:
+        print_stats()
