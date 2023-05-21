@@ -1,15 +1,26 @@
 #!/usr/bin/python3
 '''
-Script-> contains a function that determines if a given data set
+A module that contains a function that determines if a given data set
 represents a valid UTF-8 encoding.
 '''
 
 
 def validUTF8(data):
+    '''
+    A function that determines if a given data set is a valid
+    UTF-8 encoding.
+
+    Args:
+        data (list): A list of integers representing the data to be checked.
+
+    Returns:
+        bool: True if the data is a valid UTF-8 encoding, False otherwise.
+    '''
     byte_count = 0
+
     for i in data:
         if byte_count == 0:
-            if i >> 5 == 0b110:
+            if i >> 5 == 0b110 or i >> 5 == 0b1110:
                 byte_count = 1
             elif i >> 4 == 0b1110:
                 byte_count = 2
