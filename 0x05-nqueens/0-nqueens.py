@@ -46,7 +46,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     n = int(sys.argv[1])
-    
+
     try:
         if n < 4:
             print('N must be at least 4')
