@@ -49,12 +49,8 @@ if __name__ == '__main__':
         n = int(sys.argv[1])
 
         if n < 4:
-        print('N must be at least 4')
-        sys.exit(1)
-<<<<<<< HEAD
-
-=======
->>>>>>> f1e9801fb3d0d89aed440a85960de6bf8619bdbf
+            print('N must be at least 4')
+            sys.exit(1)
     except ValueError:
         print('N must be a number')
         exit(1)
