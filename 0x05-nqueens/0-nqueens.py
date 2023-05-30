@@ -52,7 +52,6 @@ if __name__ == '__main__':
         if n < 4:
         print('N must be at least 4')
         sys.exit(1)
-        
     except ValueError:
         print('N must be a number')
         exit(1)
