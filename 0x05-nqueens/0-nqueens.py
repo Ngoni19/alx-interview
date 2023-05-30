@@ -4,6 +4,14 @@
 import sys
 
 
+def is_valid(n):
+    try:
+        int(n)
+        return True
+    except ValueError:
+        return False
+
+
 def is_safe(placed_queens, row, col):
     for r, c in placed_queens:
         if col == c or row - col == r - c or row + col == r + c:
@@ -33,12 +41,18 @@ def solve_n_queens(n):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 2 or not is_valid(sys.argv[1]):
         print("Usage: nqueens N")
         sys.exit(1)
 
+
     try:
         n = int(sys.argv[1])
+        
+        if n < 4:
+        print('N must be at least 4')
+        sys.exit(1)
+        
     except ValueError:
         print('N must be a number')
         exit(1)
