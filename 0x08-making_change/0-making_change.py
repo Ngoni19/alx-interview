@@ -7,23 +7,19 @@ import sys
 
 
 def makeChange(coins, total):
-    '''
-    Return: fewest number of coins needed to meet total
-    If total is 0 or less, return 0
-    If total cannot be met by any number of coins you have, return -1
-    '''
     if total <= 0:
         return 0
-    table = [sys.maxsize for k in range(total + 1)]
+    table = [sys.maxsize for _ in range(total + 1)]
     table[0] = 0
-    m = len(coins)
+    
     for k in range(1, total + 1):
-        for j in range(m):
-            if coins[j] <= k:
-                subres = table[k - coins[j]]
+        for i, coin in enumerate(coins):
+            if coin <= k:
+                subres = table[k - coin]
                 if subres != sys.maxsize and subres + 1 < table[k]:
                     table[k] = subres + 1
+            else:
+                break
+    
+    return table[total] if table[total] < sys.maxsize else -1
 
-    if table[total] == sys.maxsize:
-        return -1
-    return table[total]
