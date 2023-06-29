@@ -1,62 +1,44 @@
 #!/usr/bin/python3
 '''Script -> Prime Game'''
 
-from math import isqrt
 
-def is_winner(x, nums):
-    '''
-    Determines the winner of the game.
-
-    Parameters:
-    x (int): The number of rounds.
-    nums (list): List of numbers for each round.
-
-    Returns:
-    str: The name of the winner or None if it's a draw.
-    '''
-    winner_counter = {'Maria': 0, 'Ben': 0}
+def isWinner(x, nums):
+    '''finds the real winner'''
+    winnerCounter = {'Maria': 0, 'Ben': 0}
 
     for k in range(x):
-        round_winner = is_round_winner(nums[k])
-        if round_winner is not None:
-            winner_counter[round_winner] += 1
+        roundWinner = isRoundWinner(nums[k], x)
+        if roundWinner is not None:
+            winnerCounter[roundWinner] += 1
 
-    if winner_counter['Maria'] > winner_counter['Ben']:
+    if winnerCounter['Maria'] > winnerCounter['Ben']:
         return 'Maria'
-    elif winner_counter['Ben'] > winner_counter['Maria']:
+    elif winnerCounter['Ben'] > winnerCounter['Maria']:
         return 'Ben'
     else:
         return None
 
 
-def is_round_winner(n):
-    '''
-    Determines the winner of a round.
-
-    Parameters:
-    n (int): The number for the round.
-
-    Returns:
-    str: The name of the round winner or None if it's a draw.
-    '''
+def isRoundWinner(n, x):
+    '''find round winner'''
     list = [k for k in range(1, n + 1)]
     players = ['Maria', 'Ben']
 
     for k in range(n):
         # get current player
         currentPlayer = players[k % 2]
-        selected_idxs = []
+        selectedIdxs = []
         prime = -1
         for idx, num in enumerate(list):
             # if already picked prime num then
             # find if num is multipl of the prime num
             if prime != -1:
                 if num % prime == 0:
-                    selected_idxs.append(idx)
+                    selectedIdxs.append(idx)
             # else check is num is prime then pick it
             else:
-                if is_prime(num):
-                    selected_idxs.append(idx)
+                if isPrime(num):
+                    selectedIdxs.append(idx)
                     prime = num
         # if failed to pick then current player lost
         if prime == -1:
@@ -65,28 +47,20 @@ def is_round_winner(n):
             else:
                 return players[0]
         else:
-            for idx in reversed(selected_idxs):
-                del list[idx]
+            for idx, val in enumerate(selectedIdxs):
+                del list[val - idx]
     return None
 
 
-def is_prime(n):
-    '''
-    Checks if a number is prime.
-
-    Parameters:
-    n (int): The number to check.
-
-    Returns:
-    bool: True if the number is prime, False otherwise.
-    '''
-    if n < 2:
+def isPrime(n):
+    # 0, 1, even numbers greater than 2 are NOT PRIME
+    if n == 1 or n == 0 or (n % 2 == 0 and n > 2):
         return False
-    if n == 2 or n == 3:
+    else:
+        # Not prime if divisable by another number less
+        # or equal to the square root of itself.
+        # n**(1/2) returns square root of n
+        for k in range(3, int(n**(1/2))+1, 2):
+            if n % k == 0:
+                return "Not prime"
         return True
-    if n % 2 == 0 or n % 3 == 0:
-        return False
-    for i in range(5, isqrt(n) + 1, 6):
-        if n % i == 0 or n % (i + 2) == 0:
-            return False
-    return True
